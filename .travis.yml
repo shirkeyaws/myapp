@@ -40,6 +40,7 @@ script:
 - ionic build android
 - mv /home/travis/build/shirkeyaws/myapp/platforms/android/build/outputs/apk/android-debug.apk ./travis.apk
 - APK_PUT_URL=$(aws --region us-west-2 devicefarm create-upload --name travis.apk --type ANDROID_APP --project-arn arn:aws:devicefarm:us-west-2:306280812807:project:a7645c59-b12a-488a-b422-0ea0ead489e1 --query="upload.url")
+- echo $APK_PUT_URL
 - wget http://packages.ubuntu.com/yakkety/curl
 - chmod +x ./curl
-- ./curl $APK_PUT_URL -X PUT --upload-file travis.apk
+- ./curl -T travis.apk $APK_PUT_URL
