@@ -38,8 +38,5 @@ script:
 - ionic platform add android
 - ionic build android
 - mv /home/travis/build/shirkeyaws/myapp/platforms/android/build/outputs/apk/android-debug.apk ./travis.apk
-- RESPONSE=$(aws --region us-west-2 devicefarm create-upload --name travis.apk --type ANDROID_APP --project-arn arn:aws:devicefarm:us-west-2:306280812807:project:a7645c59-b12a-488a-b422-0ea0ead489e1)
-- APK_ARN=$(echo "$RESPONSE" | grep arn:aws:devicefarm | gawk 'match($0, "(arn:aws:devicefarm(.*))", ary) {print ary[1]}')
-- APK_PUT_URL=$(echo "$RESPONSE" | gawk 'match($0, "url": "(.*)", ary) {print ary[1]}')
-- echo "$APK_ARN" >> apkARN.txt
+- APK_PUT_URL=$(aws --region us-west-2 devicefarm create-upload --name travis.apk --type ANDROID_APP --project-arn arn:aws:devicefarm:us-west-2:306280812807:project:a7645c59-b12a-488a-b422-0ea0ead489e1 --query="upload.url")
 - curl $APK_PUT_URL -X PUT --upload-file travis.apk
