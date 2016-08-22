@@ -17,9 +17,11 @@ addons:
     - lib32stdc++6
     - lib32z1
 before_install:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
 - npm install -g npm@latest
 install:
-- npm install -g bower cordova ionic
+- npm install -g bower cordova ionic aws-cli
 - npm install
 - bower update
 before_script:
